@@ -1,0 +1,45 @@
+@startuml C4_Context_Online_Deposits
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title C4 Context — Открытие депозитов онлайн (MVP)
+
+Person(client, "Клиент", "Пользователь интернет-банка и сайта")
+Person(front_office, "Менеджер фронт-офиса", "Сотрудник отделения банка")
+Person(back_office, "Менеджер бэк-офиса", "Сотрудник бэк-офиса депозитов")
+Person(call_operator, "Оператор кол-центра", "Оператор кол-центра банка")
+Person(credit_employee, "Сотрудник кредитования", "Сотрудник отдела кредитования")
+
+System(site, "Сайт", "PHP + React.js\nМаркетинг, заявки")
+System(internet_bank, "Интернет-банк", "ASP.NET MVC 4.5\n+ Микросервис депозитов")
+System(abs, "АБС", "Delphi + Oracle\nУчёт операций")
+System(call_center, "Система кол-центра", "Java Spring Boot\nReact.js, PostgreSQL")
+System(deposit_service, "Сервис депозитов", "Java Spring Boot\nPostgreSQL (НОВЫЙ)")
+System(kafka, "Apache Kafka", "Брокер сообщений\n(НОВЫЙ)")
+System(notification_service, "Сервис уведомлений", "Kafka → СМС (НОВЫЙ)")
+
+System_Ext(sms_gateway, "СМС-шлюз", "Отправка уведомлений")
+System_Ext(telecom, "Телеком-оператор", "Внешний (СМС)")
+System_Ext(partner_call_center, "Партнёрский кол-центр", "Внешняя система (SFTP)")
+
+Rel(client, site, "HTTPS", "Просмотр депозитов, подача заявки")
+Rel(client, internet_bank, "HTTPS", "Просмотр депозитов, подача заявки")
+Rel(front_office, abs, "Delphi клиент", "Работа с клиентами")
+Rel(back_office, abs, "Delphi клиент", "Обработка заявок")
+Rel(call_operator, call_center, "Веб-интерфейс", "Консультирование клиентов")
+Rel(credit_employee, abs, "Кредитный риск", "Расчёт ставок")
+
+Rel(internet_bank, kafka, "Заявки", "Публикация заявок")
+Rel(kafka, deposit_service, "События", "Распределение событий")
+Rel(deposit_service, abs, "REST API", "Создание заявок, получение данных")
+Rel(site, call_center, "Заявки", "Передача заявок от клиентов")
+Rel(deposit_service, kafka, "Ставки", "Публикация обновлений ставок")
+Rel(kafka, notification_service, "События", "Подтверждение ставки, открытие депозита")
+Rel(notification_service, sms_gateway, "СМС", "Отправка уведомлений")
+Rel(sms_gateway, telecom, "Отправка", "Отправка СМС клиентам")
+Rel(deposit_service, partner_call_center, "SFTP файлы", "Экспорт ставок")
+
+SHOW_LEGEND()
+
+@enduml

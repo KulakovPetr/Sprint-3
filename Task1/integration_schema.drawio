@@ -1,0 +1,111 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.3.6 Chrome/140.0.7339.249 Electron/38.8.0 Safari/537.36" version="29.3.6">
+  <diagram id="integration" name="Integration Schema">
+    <mxGraphModel dx="2205" dy="1327" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="a1" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="&lt;b&gt;Клиент&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="40" x="50" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Сотрудник&lt;br&gt;фронт-офиса&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="40" x="50" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#e1d5e7;strokeColor=#9673a6;" value="&lt;b&gt;Сотрудник&lt;br&gt;бэк-офиса&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="40" x="50" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Оператор&lt;br&gt;кол-центра&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="40" x="1200" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#fff2cc;strokeColor=#d6b656;" value="&lt;b&gt;Оператор&lt;br&gt;партнёрского&lt;br&gt;кол-центра&lt;/b&gt;" vertex="1">
+          <mxGeometry height="60" width="40" x="1200" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="&lt;b&gt;Сайт&lt;/b&gt;&lt;br&gt;PHP + React.js&lt;br&gt;(маркетинг)" vertex="1">
+          <mxGeometry height="70" width="160" x="200" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" value="&lt;b&gt;Интернет-банк&lt;/b&gt;&lt;br&gt;ASP.NET MVC 4.5&lt;br&gt;MS SQL" vertex="1">
+          <mxGeometry height="70" width="160" x="200" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="&lt;b&gt;АБС&lt;/b&gt;&lt;br&gt;Delphi клиент&lt;br&gt;Oracle DB + PL-SQL" vertex="1">
+          <mxGeometry height="80" width="180" x="500" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="&lt;b&gt;Система кол-центра&lt;/b&gt;&lt;br&gt;React.js + Java Spring Boot&lt;br&gt;PostgreSQL (микросервисы)" vertex="1">
+          <mxGeometry height="80" width="220" x="850" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;" value="&lt;b&gt;Система партнёрского&lt;br&gt;кол-центра&lt;/b&gt;&lt;br&gt;(внешняя система)" vertex="1">
+          <mxGeometry height="70" width="220" x="850" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;" value="&lt;b&gt;СМС-шлюз&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="630" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" value="&lt;b&gt;Телеком-оператор&lt;/b&gt;&lt;br&gt;(внешний)" vertex="1">
+          <mxGeometry height="50" width="140" x="630" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e1l" connectable="0" parent="e1" style="edgeLabel;html=1;fontSize=9;" value="HTTPS" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="a1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2l" connectable="0" parent="e2" style="edgeLabel;html=1;fontSize=9;" value="HTTPS" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="a2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3l" connectable="0" parent="e3" style="edgeLabel;html=1;fontSize=9;" value="Delphi клиент" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="a3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4l" connectable="0" parent="e4" style="edgeLabel;html=1;fontSize=9;" value="Delphi клиент" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#FF0000;dashed=1;" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5l" connectable="0" parent="e5" style="edgeLabel;html=1;fontSize=9;" value="&lt;font color=&#39;red&#39;&gt;Прямое подключение&lt;br&gt;к БД Oracle&lt;br&gt;(legacy)&lt;/font&gt;" vertex="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-98" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="s4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6l" connectable="0" parent="e6" style="edgeLabel;html=1;fontSize=9;" value="Обращения" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="a4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7l" connectable="0" parent="e7" style="edgeLabel;html=1;fontSize=9;" value="Веб-интерфейс" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="a5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8l" connectable="0" parent="e8" style="edgeLabel;html=1;fontSize=9;" value="Скрипты звонков" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9l" connectable="0" parent="e9" style="edgeLabel;html=1;fontSize=9;" value="СМС-оповещения" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="s6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;" target="s7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10l" connectable="0" parent="e10" style="edgeLabel;html=1;fontSize=9;" value="Отправка СМС" vertex="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=16;align=center;" value="&lt;b&gt;Схема интеграции приложений банка «Стандарт» (AS-IS)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="500" x="350" y="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,55 @@
+@startuml C4_Components_Rates_Flow
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title C4 Components — Передача ставок (детализация компонентов)
+
+Person(call_operator, "Оператор кол-центра", "Просмотр ставок")
+Person(partner_operator, "Оператор партнёра", "Использование ставок")
+
+System_Boundary(deposit_service_boundary, "Deposit Service") {
+    Component(rate_controller, "Rate Controller", "REST API", "/api/rates")
+    Component(rate_service, "Rate Service", "Бизнес-логика", "управления ставками")
+    Component(rate_repository, "Rate Repository", "Хранение ставок", "PostgreSQL")
+    Component(kafka_producer, "Kafka Producer", "Публикация в", "deposit-rates")
+    Component(sftp_exporter, "SFTP Exporter", "Генерация CSV", "Выгрузка на SFTP")
+    Component(abs_client, "ABS Client", "REST-клиент", "для АБС API")
+    ContainerDb(postgresql, "PostgreSQL", "PostgreSQL", "БД сервиса депозитов")
+}
+
+System(kafka, "Apache Kafka", "Топик: deposit-rates")
+
+System_Boundary(call_center_boundary, "Система кол-центра") {
+    Component(rates_consumer, "rates-consumer", "Kafka Consumer", "Обновление ставок")
+    ComponentDb(rates_cache, "Rates Cache", "PostgreSQL", "Локальный кэш ставок")
+    Component(rates_ui, "Rates UI", "React.js", "Интерфейс ставок")
+    Component(crm_backend, "CRM Backend", "Java Spring Boot", "Основной бэкенд")
+}
+
+System(sftp_server, "SFTP-сервер", "DMZ банка, CSV-файлы")
+System_Ext(partner_call_center, "Партнёрский кол-центр", "Забирает файлы по расписанию")
+System_Ext(abs_api, "АБС REST API", "Данные ставок, Кредитный риск")
+
+Rel(call_operator, rates_ui, "Веб", "Просмотр ставок")
+Rel(partner_operator, partner_call_center, "SFTP клиент", "Использование")
+
+Rel(rate_controller, rate_service, "", "")
+Rel(rate_service, rate_repository, "", "")
+Rel(rate_service, sftp_exporter, "", "")
+Rel(rate_repository, postgresql, "Чтение/запись", "")
+Rel(rate_repository, abs_client, "", "")
+Rel(abs_client, abs_api, "REST API", "")
+Rel(rate_service, kafka_producer, "", "")
+Rel(kafka_producer, kafka, "Публикация", "")
+Rel(kafka, rates_consumer, "Подписка", "")
+Rel(rates_consumer, rates_cache, "Обновление", "")
+Rel(rates_ui, crm_backend, "", "")
+Rel(crm_backend, rates_cache, "Чтение", "")
+Rel(sftp_exporter, sftp_server, "CSV файл", "")
+Rel(sftp_server, partner_call_center, "SFTP", "")
+Rel(partner_call_center, partner_operator, "SFTP клиент", "")
+
+SHOW_LEGEND()
+
+@enduml

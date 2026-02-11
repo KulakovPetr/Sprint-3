@@ -1,0 +1,71 @@
+@startuml C4_Containers_InternetBank_ABS
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title C4 Containers — Интернет-банк и АБС (детализация)
+
+Person(client, "Клиент", "Пользователь интернет-банка")
+Person(back_office_manager, "Менеджер бэк-офиса", "Сотрудник бэк-офиса")
+Person(call_operator, "Оператор кол-центра", "Оператор кол-центра")
+
+System_Boundary(internet_bank_boundary, "Интернет-банк") {
+    Container(web_app, "Web Application", "ASP.NET MVC 4.5", "Монолит (legacy)")
+    Container(api_gateway, "API Gateway", "Маршрутизация, SSL-терминация", "НОВЫЙ")
+    Container(dotnet_adapter, ".NET Core Adapter", "Kafka Producer", "Мост к Kafka (НОВЫЙ)")
+    Container(kafka_producer, "Kafka Producer", "Публикация заявок", "в топик deposits (НОВЫЙ)")
+    Container(deposit_ui, "Deposit UI Module", "React.js SPA", "Интерфейс депозитов (НОВЫЙ)")
+    Container(sms_confirmation, "SMS Confirmation", "Подтверждение через СМС", "Силами банка (НОВЫЙ)")
+    ContainerDb(ms_sql, "MS SQL Database", "Microsoft SQL Server", "Данные клиентов, счета, платежи")
+    Container(cache_service, "Cache Service", "Redis", "Кэш справочников (НОВЫЙ)")
+    Container(load_balancer, "Load Balancer", "Балансировка", "между серверами (НОВЫЙ)")
+}
+
+System_Boundary(abs_boundary, "АБС") {
+    Container(desktop_client, "Desktop Client", "Delphi", "Интерфейс сотрудников")
+    Container(rest_api, "REST API Layer", "API поверх PL-SQL", "НОВЫЙ")
+    Container(rate_module, "Rate Module", "Управление ставками", "Замена Excel (НОВЫЙ)")
+    Container(deposit_processing, "Deposit Processing", "PL-SQL процедуры", "Обработка заявок")
+    Container(credit_risk, "Credit Risk Module", "Анализ кредитного риска", "")
+    ContainerDb(oracle_db, "Oracle Database", "Oracle", "Основная БД АБС")
+    Container(kafka_consumer, "Kafka Consumer", "Приём заявок", "из deposits (НОВЫЙ)")
+}
+
+System(kafka, "Apache Kafka", "Брокер сообщений (НОВЫЙ)")
+System(deposit_service, "Deposit Service", "Java Spring Boot, PostgreSQL (НОВЫЙ)")
+System(notification_service, "Notification Service", "Kafka → СМС (НОВЫЙ)")
+System_Ext(sms_gateway, "СМС-шлюз", "Телеком-оператор")
+System(call_center_system, "Система кол-центра", "Java Spring Boot")
+System(site, "Сайт", "PHP + React.js")
+
+Rel(client, internet_bank_boundary, "HTTPS", "Использование")
+Rel(back_office_manager, abs_boundary, "Delphi клиент", "Использование")
+Rel(call_operator, call_center_system, "Веб", "Использование")
+
+Rel(client, site, "HTTPS", "Использование")
+
+Rel_Back(web_app, api_gateway, "Запросы", "")
+Rel(deposit_ui, load_balancer, "Запросы", "")
+Rel(load_balancer, api_gateway, "Запросы", "")
+Rel(api_gateway, dotnet_adapter, "Заявки REST API", "")
+Rel(dotnet_adapter, kafka_producer, "", "")
+Rel(kafka_producer, kafka, "Заявки", "Публикация")
+Rel(kafka, kafka_consumer, "Заявки", "Подписка")
+Rel(kafka_consumer, deposit_processing, "", "")
+Rel(deposit_processing, oracle_db, "Чтение/запись", "")
+Rel(desktop_client, rate_module, "Delphi клиент", "")
+Rel(rate_module, oracle_db, "Чтение/запись", "")
+Rel(rest_api, oracle_db, "Чтение/запись", "")
+Rel(deposit_service, rest_api, "REST API", "Вызов")
+Rel(kafka, deposit_service, "События", "")
+Rel(deposit_service, ms_sql, "Чтение/запись", "")
+Rel(deposit_service, cache_service, "Кэш", "")
+Rel(deposit_service, sms_confirmation, "", "")
+Rel(kafka, notification_service, "События", "")
+Rel(notification_service, sms_gateway, "СМС", "")
+Rel(site, call_center_system, "Заявки", "")
+Rel(call_center_system, kafka, "", "")
+
+SHOW_LEGEND()
+
+@enduml

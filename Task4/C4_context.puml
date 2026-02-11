@@ -1,0 +1,33 @@
+@startuml C4_Context_Rates_To_CallCenter
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+LAYOUT_WITH_LEGEND()
+
+title C4 Context — Передача ставок в кол-центр
+
+Person(credit_employee, "Сотрудник кредитования", "Расчёт ставок по депозитам")
+Person(call_operator, "Оператор кол-центра", "Консультирование клиентов")
+Person(partner_operator, "Оператор партнёрского кол-центра", "Консультирование клиентов")
+
+System(abs, "АБС", "Oracle + PL-SQL\nМодуль ставок")
+System(deposit_service, "Сервис депозитов", "Java Spring Boot\nPostgreSQL")
+System(kafka, "Apache Kafka", "Топик deposit-rates\nБрокер сообщений")
+System(call_center, "Система кол-центра", "Java Spring Boot\nReact.js")
+System(rates_consumer, "rates-consumer", "Kafka Consumer (НОВЫЙ)")
+System(sftp_server, "SFTP-сервер", "DMZ банка\nCSV-файлы со ставками")
+
+System_Ext(partner_call_center, "Партнёрский кол-центр", "Внешняя система\nЗабирает файлы")
+
+Rel(credit_employee, abs, "Расчёт ставок", "Ввод данных")
+Rel(abs, deposit_service, "REST API (ставки)", "Передача ставок")
+Rel(deposit_service, kafka, "Публикация событий", "Обновление ставок")
+Rel(kafka, rates_consumer, "Подписка на ставки", "Распределение событий")
+Rel(rates_consumer, call_center, "Обновление кэша", "Синхронизация данных")
+Rel(call_operator, call_center, "Веб-интерфейс", "Просмотр ставок")
+Rel(deposit_service, sftp_server, "SFTP-экспорт (CSV файл)", "Генерация и загрузка")
+Rel(partner_operator, sftp_server, "SFTP", "Загрузка файлов")
+Rel(sftp_server, partner_call_center, "SFTP download", "Получение файлов")
+
+SHOW_LEGEND()
+
+@enduml
